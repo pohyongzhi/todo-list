@@ -1,0 +1,14 @@
+{
+    "name": "todo-list",
+    "version": "1.0.0",
+    "description": "Todo-List built using HMTL, CSS, and JavaScript",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --config webpack.config.js",
+        "deploy": "git subtree push --prefix dist origin gh-pages"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
