@@ -3,7 +3,67 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
         <title>Todo List</title>
     </head>
-    <body></body>
+    <body>
+        <div id="add-project-form">
+            <div id="add-project-form-content">
+                <form id="project-form" action="post">
+                    <label for="projectName">Add / Delete Project Name</label>
+                    <input id="projectName" name="projectName" type="text" />
+                    <input type="submit" value="Submit" />
+                </form>
+                <button id="add-project-close-btn" class="close-btn">
+                    Close
+                </button>
+            </div>
+        </div>
+        <header id="left">
+            <nav id="left-nav">
+                <button id="add-task-btn">
+                    <img
+                        class="icon"
+                        src="assets/icons/plus-icon.svg"
+                        alt="Plus icon"
+                    />
+                    Add task
+                </button>
+                <button id="all-projects-btn">
+                    <img
+                        src="assets/icons/project-icon.svg"
+                        alt="Project icon"
+                        class="icon"
+                    />
+                    All Projects
+                </button>
+                <div id="projects-btn-grp"></div>
+                <div id="add-del-project-grp">
+                    <button id="add-project-btn">Add Project</button>
+                    <button id="del-project-btn">Delete Project</button>
+                </div>
+            </nav>
+        </header>
+        <div id="right">
+            <div id="right-header">All Projects</div>
+            <div id="content">
+                <div class="card">
+                    <button class="card-btn"></button>
+                    <div class="card-info-group">
+                        <h2 class="card-title">Test</h2>
+                        <span class="card-description"
+                            >Create a prototype.</span
+                        >
+                        <div class="card-date-priority-group">
+                            <span class="card-due-date">
+                                Due Date: 19/29/23
+                            </span>
+                            <span class="card-priority"> Priority: High </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="index.js"></script>
+    </body>
 </html>
