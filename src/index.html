@@ -7,16 +7,18 @@
         <title>Todo List</title>
     </head>
     <body>
-        <div id="add-project-form">
-            <div id="add-project-form-content">
-                <form id="project-form" action="post">
+        <div class="form-container">
+            <div class="form-content">
+                <form class="project-form" action="post">
                     <label for="projectName">Add / Delete Project Name</label>
-                    <input id="projectName" name="projectName" type="text" />
+                    <input
+                        class="project-name"
+                        name="projectName"
+                        type="text"
+                    />
                     <input type="submit" value="Submit" />
                 </form>
-                <button id="add-project-close-btn" class="close-btn">
-                    Close
-                </button>
+                <button class="close-btn">Close</button>
             </div>
         </div>
         <header id="left">

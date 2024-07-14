@@ -10,9 +10,9 @@ class ToDo {
 class Project {
     projectList = {
         inbox: [],
-        test1: [],
-        test2: [],
-        test3: [],
+        today: [],
+        pending: [],
+        completed: [],
     };
 
     addToDo(key, todo) {
@@ -26,6 +26,9 @@ class Project {
         projectsBtnGrp.innerHTML = "";
 
         const size = Object.keys(this.projectList).length;
+
+        console.log(this.projectList); // Debug log
+        console.log(size); // Debug log
 
         for (let i = 0; i < size; i++) {
             const key = Object.keys(this.projectList)[i];
@@ -76,26 +79,21 @@ class LogicController {
 
     addProjectCtrl() {
         const addProjectBtn = document.querySelector("#add-project-btn");
-        const closeProjectFormBtn = document.querySelector(
-            "#add-project-close-btn"
-        );
-        const projectForm = document.querySelector("#project-form");
+        const closeProjectFormBtn = document.querySelector(".close-btn");
+        const projectForm = document.querySelector(".project-form");
+        const addProjectForm = document.querySelector(".form-container");
 
         // Show form logic
         addProjectBtn.addEventListener("click", () => {
-            const addProjectForm = document.querySelector("#add-project-form");
-
             addProjectForm.style.display = "flex";
         });
 
         // Close the form
         closeProjectFormBtn.addEventListener("click", () => {
-            const addProjectForm = document.querySelector("#add-project-form");
-
             addProjectForm.style.display = "none";
 
             // Clear form field
-            const projectName = document.querySelector("#projectName");
+            const projectName = document.querySelector(".project-name");
             projectName.value = "";
         });
 
@@ -112,48 +110,14 @@ class LogicController {
 
             // Re-display the list
             project.populateProjectButtons();
+
+            // Hide the form
+            addProjectForm.style.display = "none";
         });
     }
 
     delProjectCtrl() {
         const delProjectBtn = document.querySelector("#del-project-btn");
-        const closeProjectFormBtn = document.querySelector(
-            "#add-project-close-btn"
-        );
-        const projectForm = document.querySelector("#project-form");
-
-        // Show form logic
-        delProjectBtn.addEventListener("click", () => {
-            const addProjectForm = document.querySelector("#add-project-form");
-
-            addProjectForm.style.display = "flex";
-        });
-
-        // Close the form
-        closeProjectFormBtn.addEventListener("click", () => {
-            const addProjectForm = document.querySelector("#add-project-form");
-
-            addProjectForm.style.display = "none";
-
-            // Clear form field
-            const projectName = document.querySelector("#projectName");
-            projectName.value = "";
-        });
-
-        // Delete a project
-        projectForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            const formData = new FormData(projectForm);
-
-            const projectName = formData.get("projectName");
-
-            // Delete project from the list
-            project.deleteProject(projectName);
-
-            // Re-display the list
-            project.populateProjectButtons();
-        });
     }
 }
 
@@ -164,7 +128,7 @@ class DisplayController {
 }
 
 const todo1 = new ToDo("hello", "test", "12/02/23", "high");
-const todo2 = new ToDo("hello", "test", "12/02/23", "high");
+const todo2 = new ToDo("hello", "test", "12/02/23", "low");
 const todo3 = new ToDo("hello", "test", "12/02/23", "high");
 
 const project = new Project();
