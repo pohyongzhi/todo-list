@@ -7,10 +7,44 @@
         <title>Todo List</title>
     </head>
     <body>
+        <div class="task-form-container">
+            <div class="form-content">
+                <h2>Add task</h2>
+                <br />
+                <form class="add-task-form" action="post">
+                    <label for="taskName">Task Name</label>
+                    <input class="task-name" name="taskName" type="text" />
+                    <label for="taskDescription">Task Description</label>
+                    <input
+                        class="task-description"
+                        name="taskDescription"
+                        type="text"
+                    />
+                    <label for="taskDueDate">Due Date</label>
+                    <input
+                        class="task-due-date"
+                        name="taskDueDate"
+                        type="text"
+                    />
+                    <label for="taskPriority">Priority</label>
+                    <input
+                        class="task-priority"
+                        name="taskPriority"
+                        type="text"
+                    />
+                    <label for="taskProject">Task Project</label>
+                    <select name="taskProject" id="taskProjectDropdown">
+                        Select a project
+                    </select>
+                    <input type="submit" value="Submit" />
+                </form>
+                <button class="task-form-close-btn">Close</button>
+            </div>
+        </div>
         <div class="form-container">
             <div class="form-content">
-                <form class="project-form" action="post">
-                    <label for="projectName">Add / Delete Project Name</label>
+                <form class="add-project-form" action="post">
+                    <label for="projectName">Add Project Name</label>
                     <input
                         class="project-name"
                         name="projectName"
@@ -18,7 +52,7 @@
                     />
                     <input type="submit" value="Submit" />
                 </form>
-                <button class="close-btn">Close</button>
+                <button class="project-form-close-btn">Close</button>
             </div>
         </div>
         <header id="left">
