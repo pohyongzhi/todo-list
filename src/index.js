@@ -7,6 +7,22 @@ class ToDo {
         this.dueDate = dueDate;
         this.priority = priority;
     }
+
+    getTitle() {
+        return this.title;
+    }
+
+    getDescription() {
+        return this.description;
+    }
+
+    getDueDate() {
+        return this.dueDate;
+    }
+
+    getPriority() {
+        return this.priority;
+    }
 }
 
 class Project {
@@ -137,7 +153,9 @@ class LogicController {
             // Add toDo
             project.addToDo(taskProject, toDo);
 
-            // Re-display
+            // Clear and re-display
+
+            displayController.displayAllProject();
 
             // Hide the form
             addTaskForm.style.display = "none";
@@ -196,31 +214,95 @@ class LogicController {
 class DisplayController {
     constructor(project) {
         this.project = project;
+        this.init();
     }
 
-    displayAllProject(projects) {}
+    init() {
+        this.displayAllProject();
+    }
 
-    displayProject(project) {}
+    displayAllProject() {
+        // Clear all toDo
+        const content = document.querySelector("#content");
+        content.innerHTML = "";
+
+        // Display Projects
+        const projectList = project.getProjectList();
+        const projectKeys = Object.keys(projectList);
+
+        projectKeys.forEach((key) => {
+            this.displayProject(key, projectList[key]);
+        });
+
+        const rightHeader = document.querySelector("#right-header");
+        rightHeader.innerHTML = "ALL PROJECTS";
+    }
+
+    displayProject(projectTitle, toDoList) {
+        const rightHeader = document.querySelector("#right-header");
+        rightHeader.innerHTML = projectTitle.toUpperCase();
+
+        toDoList.forEach((toDo) => {
+            this.displayToDo(toDo);
+        });
+    }
 
     displayToDo(toDo) {
-        const content = document.querySelector("#id");
+        const content = document.getElementById("content");
 
         // Creation of card
-        const card = document.createAttribute("div");
+        const card = document.createElement("div");
         card.className = "card";
 
+        const button = document.createElement("button");
+        button.className = "card-btn";
+
+        const cardInfoGroup = document.createElement("div");
+        cardInfoGroup.className = "card-info-group";
+
+        const h2 = document.createElement("h2");
+        h2.className = "card-title";
+        h2.textContent = toDo.getTitle();
+
+        const span1 = document.createElement("span");
+        span1.className = "card-description";
+        span1.textContent = toDo.getDescription();
+
+        const cardDatePriorityGroup = document.createElement("div");
+        cardDatePriorityGroup.className = "card-date-priority-group";
+
+        const span2 = document.createElement("span");
+        span2.className = "card-due-date";
+        span2.textContent = "Due Date: " + toDo.getDueDate();
+
+        const span3 = document.createElement("span");
+        span3.className = "card-priority";
+        span3.textContent = "Priority: " + toDo.getPriority();
+
+        cardDatePriorityGroup.appendChild(span2);
+        cardDatePriorityGroup.appendChild(span3);
+
+        cardInfoGroup.appendChild(h2);
+        cardInfoGroup.appendChild(span1);
+        cardInfoGroup.appendChild(cardDatePriorityGroup);
+
         // Appending of card
+        card.appendChild(button);
+        card.appendChild(cardInfoGroup);
+
+        content.appendChild(card);
     }
 }
 
 const project = new Project();
-const logicController = new LogicController(project);
-const displayController = new DisplayController(project);
 
 const todo1 = new ToDo("hello", "test", "12/02/23", "high");
-const todo2 = new ToDo("hello", "test", "12/02/23", "low");
-const todo3 = new ToDo("hello", "test", "12/02/23", "high");
+const todo2 = new ToDo("yo", "test", "12/02/23", "low");
+const todo3 = new ToDo("yassup", "test", "12/02/23", "high");
 
 project.addToDo("today", todo1);
 project.addToDo("today", todo2);
 project.addToDo("today", todo3);
+
+const logicController = new LogicController(project);
+const displayController = new DisplayController(project);
