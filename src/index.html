@@ -52,7 +52,21 @@
                     />
                     <input type="submit" value="Submit" />
                 </form>
-                <button class="project-form-close-btn">Close</button>
+                <button class="add-project-form-close-btn">Close</button>
+            </div>
+        </div>
+        <div class="del-form-container">
+            <div class="form-content">
+                <form class="delete-project-form" action="post">
+                    <label for="projectName">Delete Project Name</label>
+                    <input
+                        class="project-name"
+                        name="projectName"
+                        type="text"
+                    />
+                    <input type="submit" value="Submit" />
+                </form>
+                <button class="del-project-form-close-btn">Close</button>
             </div>
         </div>
         <header id="left">
@@ -81,9 +95,9 @@
             </nav>
         </header>
         <div id="right">
-            <div id="right-header">All Projects</div>
+            <div id="right-header"></div>
             <div id="content">
-                <div class="card">
+                <!-- <div class="card">
                     <button class="card-btn"></button>
                     <div class="card-info-group">
                         <h2 class="card-title">Test</h2>
@@ -97,7 +111,7 @@
                             <span class="card-priority"> Priority: High </span>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <script src="index.js"></script>

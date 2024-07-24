@@ -64,6 +64,37 @@ class Project {
         }
     }
 
+    addProjectButtonsEventListener(displayController) {
+        // Add for all project button
+        const allProjectsBtn = document.querySelector("#all-projects-btn");
+
+        allProjectsBtn.addEventListener("click", () => {
+            displayController.displayAllProject();
+        });
+
+        // Add for other project button
+        const size = Object.keys(this.projectList).length;
+
+        for (let i = 0; i < size; i++) {
+            // Get the id
+            const key = Object.keys(this.projectList)[i];
+            const btnId = key + "-btn";
+
+            // Query the id
+            const btn = document.querySelector("#" + btnId);
+
+            // Add event listener
+            if (btn) {
+                btn.addEventListener("click", () => {
+                    displayController.displayProject(
+                        key,
+                        this.projectList[key]
+                    );
+                });
+            }
+        }
+    }
+
     addProject(key) {
         this.projectList[key] = [];
     }
@@ -75,12 +106,25 @@ class Project {
     getProjectList() {
         return this.projectList;
     }
+
+    moveToCompleted(key, toDo) {
+        // Find the project and remove the specific task
+        const project = this.projectList[key];
+        if (project) {
+            const index = project.indexOf(toDo);
+            if (index > -1) {
+                project.splice(index, 1); // Remove the task from the original project
+            }
+        }
+        this.addToDo("completed", toDo);
+    }
 }
 
 class LogicController {
     // Creating a Controller object immediately initializes all btn logic
-    constructor(project) {
+    constructor(project, displayController) {
         this.project = project;
+        this.displayController = displayController;
         this.init();
     }
 
@@ -89,6 +133,7 @@ class LogicController {
         this.addProjectCtrl();
         this.delProjectCtrl();
         project.populateProjectButtons();
+        project.addProjectButtonsEventListener(displayController);
     }
 
     addTaskCtrl() {
@@ -165,7 +210,7 @@ class LogicController {
     addProjectCtrl() {
         const addProjectBtn = document.querySelector("#add-project-btn");
         const closeProjectFormBtn = document.querySelector(
-            ".project-form-close-btn"
+            ".add-project-form-close-btn"
         );
         const projectForm = document.querySelector(".add-project-form");
         const addProjectForm = document.querySelector(".form-container");
@@ -198,16 +243,48 @@ class LogicController {
             // Re-display the list
             project.populateProjectButtons();
 
+            // Add event-listener
+            project.addProjectButtonsEventListener(displayController);
+
             // Hide the form
             addProjectForm.style.display = "none";
         });
     }
 
     delProjectCtrl() {
-        // const delProjectBtn = document.querySelector("#del-project-btn");
-        // const delProjectForm = document.querySelector(".form-container");
-        // // Show form logic
-        // delProjectBtn.addEventListener("click", () => {});
+        const delProjectBtn = document.querySelector("#del-project-btn");
+        const delProjectFormContainer = document.querySelector(
+            ".del-form-container"
+        );
+
+        // Show form logic
+        delProjectBtn.addEventListener("click", () => {
+            delProjectFormContainer.style.display = "flex";
+        });
+
+        // Close form logic
+        const delProjectFormCloseBtn = document.querySelector(
+            ".del-project-form-close-btn"
+        );
+        delProjectFormCloseBtn.addEventListener("click", () => {
+            delProjectFormContainer.style.display = "none";
+        });
+
+        // Form submission logic
+        const delProjectForm = document.querySelector(".delete-project-form");
+        delProjectForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const formData = new FormData(delProjectForm);
+
+            const projectName = formData.get("projectName");
+            project.deleteProject(projectName);
+
+            // Re-display the list
+            project.populateProjectButtons();
+
+            // Hide the form
+            delProjectFormContainer.style.display = "none";
+        });
     }
 }
 
@@ -226,28 +303,39 @@ class DisplayController {
         const content = document.querySelector("#content");
         content.innerHTML = "";
 
+        const rightHeader = document.querySelector("#right-header");
+        rightHeader.innerHTML = "ALL PROJECTS";
+
         // Display Projects
         const projectList = project.getProjectList();
         const projectKeys = Object.keys(projectList);
 
         projectKeys.forEach((key) => {
-            this.displayProject(key, projectList[key]);
+            projectList[key].forEach((toDo) => {
+                // This check ensures that it doesn't show completed items
+                if (key !== "completed") {
+                    this.displayToDo(toDo, key);
+                }
+            });
         });
-
-        const rightHeader = document.querySelector("#right-header");
-        rightHeader.innerHTML = "ALL PROJECTS";
     }
 
     displayProject(projectTitle, toDoList) {
+        // Clear all toDo
+        const content = document.querySelector("#content");
+        content.innerHTML = "";
+
         const rightHeader = document.querySelector("#right-header");
         rightHeader.innerHTML = projectTitle.toUpperCase();
 
-        toDoList.forEach((toDo) => {
-            this.displayToDo(toDo);
-        });
+        if (toDoList) {
+            toDoList.forEach((toDo) => {
+                this.displayToDo(toDo, projectTitle);
+            });
+        }
     }
 
-    displayToDo(toDo) {
+    displayToDo(toDo, projectKey) {
         const content = document.getElementById("content");
 
         // Creation of card
@@ -279,6 +367,10 @@ class DisplayController {
         span3.className = "card-priority";
         span3.textContent = "Priority: " + toDo.getPriority();
 
+        const delButton = document.createElement("button");
+        delButton.className = "del-card-btn";
+        delButton.textContent = "Delete";
+
         cardDatePriorityGroup.appendChild(span2);
         cardDatePriorityGroup.appendChild(span3);
 
@@ -289,8 +381,32 @@ class DisplayController {
         // Appending of card
         card.appendChild(button);
         card.appendChild(cardInfoGroup);
+        card.appendChild(delButton);
 
         content.appendChild(card);
+
+        // Add event-listener for button
+        button.addEventListener("click", () => {
+            this.project.moveToCompleted(projectKey, toDo);
+            this.displayAllProject();
+        });
+
+        delButton.addEventListener("click", () => {
+            // Find the project and remove the specific task
+            const project = this.project.getProjectList()[projectKey];
+            if (project) {
+                const index = project.indexOf(toDo);
+                if (index > -1) {
+                    project.splice(index, 1); // Remove the task from the original project
+                }
+            }
+            this.displayAllProject();
+        });
+
+        // Add event-listener for card
+        card.addEventListener("click", () => {
+            console.log("clicked");
+        });
     }
 }
 
@@ -304,5 +420,5 @@ project.addToDo("today", todo1);
 project.addToDo("today", todo2);
 project.addToDo("today", todo3);
 
-const logicController = new LogicController(project);
 const displayController = new DisplayController(project);
+const logicController = new LogicController(project, displayController);

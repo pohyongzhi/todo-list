@@ -70,6 +70,18 @@ h6 {
     isolation: isolate;
 }
 
+/* Button effect */
+button {
+    border: none;
+    border-radius: 1rem;
+    font-weight: 700;
+}
+
+#left-nav button:hover,
+button:hover {
+    background-color: lightcoral;
+}
+
 body {
     display: flex;
     width: 100vw;
@@ -78,6 +90,7 @@ body {
 
 /* add-project-form, add-task-form styling */
 .form-container,
+.del-form-container,
 .task-form-container {
     display: none;
     justify-content: center;
@@ -113,7 +126,8 @@ body {
     margin-bottom: 1rem;
 }
 
-.project-form-close-btn,
+.add-project-form-close-btn,
+.del-project-form-close-btn,
 .task-form-close-btn {
     margin-top: 2rem;
     color: black;
@@ -147,6 +161,7 @@ select {
     gap: 1rem;
     font-size: 18px;
     font-weight: 900;
+    width: 100%;
 }
 
 #add-del-project-grp {
@@ -218,4 +233,15 @@ select {
     margin-top: 0.5rem;
     border-radius: 0.5rem;
     border: 1px solid white;
+}
+
+.del-card-btn {
+    background-color: lightpink;
+    border-radius: 1.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid white;
+    color: black;
+    font-weight: 700;
+    margin-left: auto;
+    margin-right: 2rem;
 }
