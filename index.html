@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Todo List</title>
+    <script defer src="main.js"></script></head>
+    <body>
+        <div class="edit-task-form-container">
+            <div class="form-content">
+                <h2>Edit task</h2>
+                <br />
+                <form class="edit-task-form" action="post">
+                    <label for="taskName">Task Name</label>
+                    <input
+                        id="taskName"
+                        class="task-name"
+                        name="taskName"
+                        type="text"
+                    />
+                    <label for="taskDescription">Task Description</label>
+                    <input
+                        id="taskDescription"
+                        class="task-description"
+                        name="taskDescription"
+                        type="text"
+                    />
+                    <label for="taskDueDate">Due Date</label>
+                    <input
+                        id="taskDueDate"
+                        class="task-due-date"
+                        name="taskDueDate"
+                        type="text"
+                    />
+                    <label for="taskPriority">Priority</label>
+                    <input
+                        id="taskPriority"
+                        class="task-priority"
+                        name="taskPriority"
+                        type="text"
+                    />
+                    <label for="taskProject">Task Project</label>
+                    <select name="taskProject" id="delTaskProjectDropdown">
+                        Select a project
+                    </select>
+                    <input type="submit" value="Submit" />
+                </form>
+                <button class="edit-task-form-close-btn">Close</button>
+            </div>
+        </div>
+        <div class="task-form-container">
+            <div class="form-content">
+                <h2>Add task</h2>
+                <br />
+                <form class="add-task-form" action="post">
+                    <label for="taskName">Task Name</label>
+                    <input class="task-name" name="taskName" type="text" />
+                    <label for="taskDescription">Task Description</label>
+                    <input
+                        class="task-description"
+                        name="taskDescription"
+                        type="text"
+                    />
+                    <label for="taskDueDate">Due Date</label>
+                    <input
+                        class="task-due-date"
+                        name="taskDueDate"
+                        type="text"
+                    />
+                    <label for="taskPriority">Priority</label>
+                    <input
+                        class="task-priority"
+                        name="taskPriority"
+                        type="text"
+                    />
+                    <label for="taskProject">Task Project</label>
+                    <select name="taskProject" id="taskProjectDropdown">
+                        Select a project
+                    </select>
+                    <input type="submit" value="Submit" />
+                </form>
+                <button class="task-form-close-btn">Close</button>
+            </div>
+        </div>
+        <div class="form-container">
+            <div class="form-content">
+                <form class="add-project-form" action="post">
+                    <label for="projectName">Add Project Name</label>
+                    <input
+                        class="project-name"
+                        name="projectName"
+                        type="text"
+                    />
+                    <input type="submit" value="Submit" />
+                </form>
+                <button class="add-project-form-close-btn">Close</button>
+            </div>
+        </div>
+        <div class="del-form-container">
+            <div class="form-content">
+                <form class="delete-project-form" action="post">
+                    <label for="projectName">Delete Project Name</label>
+                    <input
+                        class="project-name"
+                        name="projectName"
+                        type="text"
+                    />
+                    <input type="submit" value="Submit" />
+                </form>
+                <button class="del-project-form-close-btn">Close</button>
+            </div>
+        </div>
+        <header id="left">
+            <nav id="left-nav">
+                <button id="add-task-btn">
+                    <img
+                        class="icon"
+                        src="assets/plus-icon.svg"
+                        alt="Plus icon"
+                    />
+                    Add task
+                </button>
+                <button id="all-projects-btn">
+                    <img
+                        src="assets/project-icon.svg"
+                        alt="Project icon"
+                        class="icon"
+                    />
+                    All Projects
+                </button>
+                <div id="projects-btn-grp"></div>
+                <div id="add-del-project-grp">
+                    <button id="add-project-btn">Add Project</button>
+                    <button id="del-project-btn">Delete Project</button>
+                </div>
+            </nav>
+        </header>
+        <div id="right">
+            <div id="right-header"></div>
+            <div id="content"></div>
+        </div>
+        <script src="index.js"></script>
+    </body>
+</html>
