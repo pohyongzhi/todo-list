@@ -22,7 +22,7 @@ module.exports = {
                         options: {
                             name: "[name].[hash].[ext]",
                             outputPath: "assets/icons",
-                            publicPath: "assets/images",
+                            publicPath: "assets/icons",
                         },
                     },
                 ],

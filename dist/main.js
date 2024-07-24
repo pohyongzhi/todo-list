@@ -46,7 +46,7 @@ eval("\n\nmodule.exports = function (i) {\n  return i[1];\n};\n\n//# sourceURL=w
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (\"assets/images/project-icon.20766ebf1efed49d2e1c7c9be78c4446.svg\");\n\n//# sourceURL=webpack://restaurant-page/./src/assets/icons/project-icon.svg?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (\"assets/icons/project-icon.20766ebf1efed49d2e1c7c9be78c4446.svg\");\n\n//# sourceURL=webpack://restaurant-page/./src/assets/icons/project-icon.svg?");
 
 /***/ }),
 
