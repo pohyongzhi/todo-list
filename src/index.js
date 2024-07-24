@@ -173,6 +173,12 @@ class LogicController {
         // Close the form
         closeProjectFormBtn.addEventListener("click", () => {
             addTaskForm.style.display = "none";
+
+            // Reset form and dropdown
+            taskForm.reset();
+
+            const dropdown = document.querySelector("#taskProjectDropdown");
+            dropdown.innerHTML = "";
         });
 
         // Add a task
@@ -204,6 +210,12 @@ class LogicController {
 
             // Hide the form
             addTaskForm.style.display = "none";
+
+            // Reset form and dropdown
+            taskForm.reset();
+
+            const dropdown = document.querySelector("#taskProjectDropdown");
+            dropdown.innerHTML = "";
         });
     }
 
@@ -248,6 +260,8 @@ class LogicController {
 
             // Hide the form
             addProjectForm.style.display = "none";
+
+            projectForm.reset();
         });
     }
 
@@ -266,12 +280,16 @@ class LogicController {
         const delProjectFormCloseBtn = document.querySelector(
             ".del-project-form-close-btn"
         );
+
         delProjectFormCloseBtn.addEventListener("click", () => {
             delProjectFormContainer.style.display = "none";
+
+            delProjectForm.reset();
         });
 
         // Form submission logic
         const delProjectForm = document.querySelector(".delete-project-form");
+
         delProjectForm.addEventListener("submit", (event) => {
             event.preventDefault();
             const formData = new FormData(delProjectForm);
@@ -284,6 +302,9 @@ class LogicController {
 
             // Hide the form
             delProjectFormContainer.style.display = "none";
+
+            // Reset form
+            delProjectForm.reset();
         });
     }
 }
@@ -291,7 +312,16 @@ class LogicController {
 class DisplayController {
     constructor(project) {
         this.project = project;
+        this.editTaskFormContainer = document.querySelector(
+            ".edit-task-form-container"
+        );
+        this.editTaskForm = document.querySelector(".edit-task-form");
+        this.editTaskFormCloseBtn = document.querySelector(
+            ".edit-task-form-close-btn"
+        );
+        this.dropdown = document.querySelector("#delTaskProjectDropdown");
         this.init();
+        this.initEventListeners();
     }
 
     init() {
@@ -386,12 +416,14 @@ class DisplayController {
         content.appendChild(card);
 
         // Add event-listener for button
-        button.addEventListener("click", () => {
+        button.addEventListener("click", (event) => {
+            event.stopPropagation();
             this.project.moveToCompleted(projectKey, toDo);
             this.displayAllProject();
         });
 
-        delButton.addEventListener("click", () => {
+        delButton.addEventListener("click", (event) => {
+            event.stopPropagation();
             // Find the project and remove the specific task
             const project = this.project.getProjectList()[projectKey];
             if (project) {
@@ -404,17 +436,116 @@ class DisplayController {
         });
 
         // Add event-listener for card
+        const editTaskFormContainer = document.querySelector(
+            ".edit-task-form-container"
+        );
+
         card.addEventListener("click", () => {
-            console.log("clicked");
+            editTaskFormContainer.style.display = "flex";
+
+            // Populate information to the form
+            const taskName = document.querySelector("#taskName");
+            const taskDescription = document.querySelector("#taskDescription");
+            const taskDueDate = document.querySelector("#taskDueDate");
+            const taskPriority = document.querySelector("#taskPriority");
+
+            taskName.value = toDo.title;
+            taskDescription.value = toDo.description;
+            taskDueDate.value = toDo.dueDate;
+            taskPriority.value = toDo.description;
+
+            // Get project list
+            const projectKeys = Object.keys(project.getProjectList());
+
+            // Get drop down id
+            const dropdown = document.querySelector("#delTaskProjectDropdown");
+
+            // Create and append the default option to the dropdown
+            const originalProject = document.createElement("option");
+            originalProject.value = projectKey;
+            originalProject.textContent = projectKey;
+            dropdown.append(originalProject);
+
+            projectKeys.forEach((key) => {
+                if (key !== projectKey) {
+                    const option = document.createElement("option");
+                    option.value = key;
+                    option.textContent = key;
+                    dropdown.appendChild(option);
+                }
+            });
+        });
+
+        const editTaskFormCloseBtn = document.querySelector(
+            ".edit-task-form-close-btn"
+        );
+        editTaskFormCloseBtn.addEventListener("click", () => {
+            editTaskFormContainer.style.display = "none";
+
+            // Reset dropdown
+            const dropdown = document.querySelector("#delTaskProjectDropdown");
+            dropdown.innerHTML = "";
+        });
+    }
+
+    initEventListeners() {
+        // Attach the submit event listener only once
+        this.editTaskForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this.editTaskForm);
+            const taskName = formData.get("taskName");
+            const taskDescription = formData.get("taskDescription");
+            const taskDueDate = formData.get("taskDueDate");
+            const taskPriority = formData.get("taskPriority");
+            const taskProject = formData.get("taskProject");
+
+            const newToDo = new ToDo(
+                taskName,
+                taskDescription,
+                taskDueDate,
+                taskPriority
+            );
+
+            // Find the project and remove the specific task
+            const project =
+                this.project.getProjectList()[this.currentProjectKey];
+            if (project) {
+                const index = project.indexOf(this.currentToDo);
+                if (index > -1) {
+                    project.splice(index, 1); // Remove the task from the original project
+                }
+            }
+
+            console.log(taskProject);
+            this.project.addToDo(taskProject, newToDo);
+
+            // Re-display
+            this.displayAllProject();
+
+            // Reset dropdown
+            this.dropdown.innerHTML = "";
+
+            // Close form
+            this.editTaskFormContainer.style.display = "none";
+        });
+
+        // Attach the close button event listener only once
+        this.editTaskFormCloseBtn.addEventListener("click", () => {
+            this.editTaskFormContainer.style.display = "none";
+
+            // Reset dropdown
+            this.dropdown.innerHTML = "";
         });
     }
 }
 
 const project = new Project();
 
-const todo1 = new ToDo("hello", "test", "12/02/23", "high");
-const todo2 = new ToDo("yo", "test", "12/02/23", "low");
-const todo3 = new ToDo("yassup", "test", "12/02/23", "high");
+const todo1 = new ToDo("Call Tom", "Rectify error", "12/02/23", "high");
+const todo2 = new ToDo("Buy carrots", "For pasta next week", "12/02/23", "low");
+const todo3 = new ToDo("Clean my shoes", "To lend Tom", "12/02/23", "high");
 
 project.addToDo("today", todo1);
 project.addToDo("today", todo2);

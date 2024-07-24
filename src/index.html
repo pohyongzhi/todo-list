@@ -7,6 +7,48 @@
         <title>Todo List</title>
     </head>
     <body>
+        <div class="edit-task-form-container">
+            <div class="form-content">
+                <h2>Edit task</h2>
+                <br />
+                <form class="edit-task-form" action="post">
+                    <label for="taskName">Task Name</label>
+                    <input
+                        id="taskName"
+                        class="task-name"
+                        name="taskName"
+                        type="text"
+                    />
+                    <label for="taskDescription">Task Description</label>
+                    <input
+                        id="taskDescription"
+                        class="task-description"
+                        name="taskDescription"
+                        type="text"
+                    />
+                    <label for="taskDueDate">Due Date</label>
+                    <input
+                        id="taskDueDate"
+                        class="task-due-date"
+                        name="taskDueDate"
+                        type="text"
+                    />
+                    <label for="taskPriority">Priority</label>
+                    <input
+                        id="taskPriority"
+                        class="task-priority"
+                        name="taskPriority"
+                        type="text"
+                    />
+                    <label for="taskProject">Task Project</label>
+                    <select name="taskProject" id="delTaskProjectDropdown">
+                        Select a project
+                    </select>
+                    <input type="submit" value="Submit" />
+                </form>
+                <button class="edit-task-form-close-btn">Close</button>
+            </div>
+        </div>
         <div class="task-form-container">
             <div class="form-content">
                 <h2>Add task</h2>

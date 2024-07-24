@@ -91,7 +91,8 @@ body {
 /* add-project-form, add-task-form styling */
 .form-container,
 .del-form-container,
-.task-form-container {
+.task-form-container,
+.edit-task-form-container {
     display: none;
     justify-content: center;
     align-items: center;
@@ -128,6 +129,7 @@ body {
 
 .add-project-form-close-btn,
 .del-project-form-close-btn,
+.edit-task-form-close-btn,
 .task-form-close-btn {
     margin-top: 2rem;
     color: black;
