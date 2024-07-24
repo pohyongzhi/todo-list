@@ -1,4 +1,5 @@
 // import { compareAsc, format } from "date-fns";
+import "./style.css";
 
 class ToDo {
     constructor(title, description, dueDate, priority) {
