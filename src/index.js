@@ -320,6 +320,8 @@ class DisplayController {
             ".edit-task-form-close-btn"
         );
         this.dropdown = document.querySelector("#delTaskProjectDropdown");
+        this.currentToDo = null;
+        this.currentProjectKey = null;
         this.init();
         this.initEventListeners();
     }
@@ -452,7 +454,7 @@ class DisplayController {
             taskName.value = toDo.title;
             taskDescription.value = toDo.description;
             taskDueDate.value = toDo.dueDate;
-            taskPriority.value = toDo.description;
+            taskPriority.value = toDo.priority;
 
             // Get project list
             const projectKeys = Object.keys(project.getProjectList());
@@ -474,6 +476,10 @@ class DisplayController {
                     dropdown.appendChild(option);
                 }
             });
+
+            // Update currentToDo and currentProjectKey
+            this.currentToDo = toDo;
+            this.currentProjectKey = projectKey;
         });
 
         const editTaskFormCloseBtn = document.querySelector(
@@ -518,7 +524,6 @@ class DisplayController {
                 }
             }
 
-            console.log(taskProject);
             this.project.addToDo(taskProject, newToDo);
 
             // Re-display
