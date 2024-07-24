@@ -1,5 +1,6 @@
 // import { compareAsc, format } from "date-fns";
 import "./style.css";
+import icon from "./assets/icons/project-icon.svg";
 
 class ToDo {
     constructor(title, description, dueDate, priority) {
@@ -54,7 +55,7 @@ class Project {
             button.id = key + "-btn";
 
             const img = document.createElement("img");
-            img.src = "../src/assets/icons/box-icon.svg";
+            img.src = icon;
             img.alt = "Box Icon";
             img.className = "icon";
 
